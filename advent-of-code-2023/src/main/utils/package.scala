@@ -5,9 +5,15 @@ import scala.io.Source
 
 package object utils {
 
+  type M[T] = Seq[Seq[T]]
+
   def readLines(fileName: String): Array[String] = {
     val source = Source.fromResource(fileName)
     try source.getLines().toArray finally source.close()
+  }
+
+  def readAsMatrix(fileName: String): M[Char] = {
+    readLines(fileName).map(_.toCharArray.toSeq)
   }
 
   def readLinesSplitEmptyLine(fileName: String): Array[Array[String]] = {
@@ -39,7 +45,7 @@ package object utils {
   extension[T] (arr: Array[Array[T]])
     def at(point: Point): T = arr(point.x)(point.y)
 
-    def show(title:String = ""): Unit = {
+    def show(title: String = ""): Unit = {
       println(title)
       for (i <- arr.indices) {
         for (j <- arr(0).indices) {
@@ -85,6 +91,14 @@ package object utils {
     }
 
     helper(Set(start), Queue(start))
+  }
+
+  def timeNs[R](marker: String)(block: => R): R = {
+    val t0 = System.nanoTime()
+    val result = block // call-by-name
+    val t1 = System.nanoTime()
+    println(s"[$marker] elapsed time: " + (t1 - t0) + "ns")
+    result
   }
 
   def timeNs[R](block: => R): R = {
