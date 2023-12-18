@@ -6,7 +6,7 @@ import scala.io.Source
 package object utils {
 
   type M[T] = Seq[Seq[T]]
-
+  
   def readLines(fileName: String): Array[String] = {
     val source = Source.fromResource(fileName)
     try source.getLines().toArray finally source.close()
@@ -39,10 +39,12 @@ package object utils {
     def align(x: Int, y: Int): Point = Point((p.x + x) % x, (p.y + y) % y)
 
     def isCorrect(x: Int, y: Int): Boolean = (p.x >= 0 && p.y >= 0 && p.x < x && p.y < y)
+
+    def isCorrect[T](using arr: M[T]): Boolean = (p.x >= 0 && p.y >= 0 && p.x < arr.length && p.y < arr.head.length)
   }
 
 
-  extension[T] (arr: Array[Array[T]])
+  extension[T] (arr: Array[Array[T]]) {
     def at(point: Point): T = arr(point.x)(point.y)
 
     def show(title: String = ""): Unit = {
@@ -55,8 +57,38 @@ package object utils {
       }
       println()
     }
+  }
 
-  case class Vect(x: Int, y: Int)
+  extension[T] (arr: M[T]) {
+
+    def at(point: Point): T = arr(point.x)(point.y)
+
+
+    def allPoints: Seq[Point] = {
+      var s = Seq.empty[Point]
+      for (i <- arr.indices) {
+        for (j <- arr(0).indices) {
+          s = s :+ Point(i, j)
+        }
+      }
+      s
+    }
+
+    def showM(title: String = ""): Unit = {
+      println(title)
+      for (i <- arr.indices) {
+        for (j <- arr(0).indices) {
+          print(arr(i)(j))
+        }
+        println()
+      }
+      println()
+    }
+  }
+
+  case class Vect(x: Int, y: Int) {
+    def scale(scale: Int) = Vect(x * scale, y * scale)
+  }
 
   object Vect {
     val UP = Vect(-1, 0)
