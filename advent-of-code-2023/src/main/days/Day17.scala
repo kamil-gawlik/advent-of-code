@@ -43,7 +43,7 @@ object Day17 {
     res
   }
 
-  def findPath(start: Point, end: Point, minConsecutive: Int, maxConsecutive: Int): BigInt = {
+  def findPath(start: Point, end: Point, minConsecutive: Int, maxConsecutive: Int): Long = {
     var queue = Set.empty[Path]
     var costMap = Map.empty[PathKey, Int]
 
@@ -78,21 +78,21 @@ object Day17 {
   }
 
 
-  def part1(): BigInt = {
+  def part1(): Long = {
     val startingPoint = Point(0, 0)
     val end = Point(m.length - 1, m.head.length - 1)
     findPath(startingPoint, end, 0, 3)
   }
 
-  def part2(): BigInt = {
+  def part2(): Long = {
     val startingPoint = Point(0, 0)
     val end = Point(m.length - 1, m.head.length - 1)
     findPath(startingPoint, end, 4, 10)
   }
 
 
-  def main(args: Array[String]): Unit = timeMs {
-    println(part1()) // 665
-    println(part2()) // 809
+  def main(args: Array[String]): Unit = {
+    check(part1, 665)
+    check(part2, 809)
   }
 }

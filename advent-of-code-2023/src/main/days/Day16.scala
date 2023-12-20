@@ -47,7 +47,7 @@ object Day16 {
     correct
   }
 
-  def part1(): BigInt = {
+  def part1(): Long = {
     val startingBeam = Beam(Point(0, 0), RIGHT)
     countEnergized(startingBeam)
   }
@@ -62,7 +62,7 @@ object Day16 {
     beamsMem.map(_.position).toSet.size
   }
 
-  def part2(): BigInt = {
+  def part2(): Long = {
     val topBeams = lines.indices.map(y => Beam(Point(0, y), DOWN))
     val bottomBeams = lines.indices.map(y => Beam(Point(lines.head.length - 1, y), UP))
     val leftBeams = lines.head.indices.map(x => Beam(Point(x, 0), RIGHT))
@@ -72,7 +72,8 @@ object Day16 {
       .max
   }
 
-  def main(args: Array[String]): Unit = timeMs {
-    println(part2())
+  def main(args: Array[String]): Unit = {
+    check(part1,7798)
+    check(part2,8026)
   }
 }

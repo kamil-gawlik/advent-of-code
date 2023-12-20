@@ -4,13 +4,11 @@ import scala.util.matching.Regex
 import utils._
 
 object Day02 {
-  sealed trait Color
-
-  case object RED extends Color
-
-  case object GREEN extends Color
-
-  case object BLUE extends Color
+  enum Color {
+    case RED
+    case GREEN
+    case BLUE
+  }
 
   object Color {
     def of(s: String): Color = s match {
@@ -25,7 +23,7 @@ object Day02 {
   object Subset {
     def of(s: Seq[(Color, Int)]): Subset = {
       val map = s.toMap
-      Subset(map.getOrElse(RED, 0), map.getOrElse(GREEN, 0), map.getOrElse(BLUE, 0))
+      Subset(map.getOrElse(Color.RED, 0), map.getOrElse(Color.GREEN, 0), map.getOrElse(Color.BLUE, 0))
     }
   }
 
@@ -97,6 +95,7 @@ object Day02 {
   }
 
   def main(args: Array[String]): Unit = {
-    println(part2())
+    check(part1, 1867)
+    check(part2, 84538)
   }
 }

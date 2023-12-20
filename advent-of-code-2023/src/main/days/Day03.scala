@@ -103,7 +103,7 @@ object Day03 {
   }
 
   def main(args: Array[String]): Unit = {
-    //println(part1())
-    println(part2())
+    check(part1, 525181)
+    check(part2, 84289137)
   }
 }

@@ -83,6 +83,7 @@ object Day05 {
   }
 
   def main(args: Array[String]): Unit = {
-    println(part2())
+    check(part1, 579439039)
+    check(part2, 7873084) // slow, > 4min
   }
 }

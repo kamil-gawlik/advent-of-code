@@ -70,8 +70,8 @@ object Day18 {
     solve(commands.map(_.rgbed()))
   }
 
-  def main(args: Array[String]): Unit = timeMs {
-    println(part1()) //48795
-    println(part2()) // 40654918441248
+  def main(args: Array[String]): Unit = {
+    check(part1, 48795)
+    check(part2, 40654918441248L)
   }
 }

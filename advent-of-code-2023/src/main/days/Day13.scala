@@ -72,14 +72,14 @@ object Day13 {
     0
   }
 
-  def part1(): BigInt = {
+  def part1(): Long = {
     val patterns = readData()
     val vertical = patterns.map(findVerticalMirror).sum
     val horizontal = patterns.map(findHorrizontalMirror).sum
     vertical + horizontal
   }
 
-  def part2(): BigInt = {
+  def part2(): Long = {
     val patterns = readData()
     val vertical = patterns.map(findVerticalMirrorWithSmudge).sum
     val horizontal = patterns.map(findHorrizontalMirrorWithSmudge).sum
@@ -87,6 +87,7 @@ object Day13 {
   }
 
   def main(args: Array[String]): Unit = {
-    print(part2())
+    check(part1,27505)
+    check(part2,22906)
   }
 }

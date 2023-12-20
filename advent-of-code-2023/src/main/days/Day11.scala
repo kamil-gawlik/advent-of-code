@@ -51,12 +51,12 @@ object Day11 {
         val path = Math.abs(p1.x - p2.x) + Math.abs((p1.y - p2.y))
         path
       }.toSeq
-    println(paths)
+    //println(paths)
     paths.sum
   }
 
-  def part2(): BigInt = {
-    val multiplier: BigInt = 1000000 - 1
+  def part2(): Long = {
+    val multiplier: Long = 1000000L - 1
     val arr = readInput()
     val emptyXs = arr.zipWithIndex.filterNot(l => l._1.contains('#')).map(_._2)
     val emptyYs = arr.transpose.zipWithIndex.filterNot(l => l._1.contains('#')).map(_._2)
@@ -85,6 +85,7 @@ object Day11 {
   }
 
   def main(args: Array[String]): Unit = {
-    print(part2())
+    check(part1,9734203)
+    check(part2,568914596391L)
   }
 }

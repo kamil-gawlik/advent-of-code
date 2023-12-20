@@ -36,7 +36,7 @@ object Day15 {
     )
   }
 
-  def part1(): BigInt = {
+  def part1(): Long = {
     val commands = line.split(",")
     commands.map(hash).sum
   }
@@ -55,13 +55,13 @@ object Day15 {
   }
 
 
-  def calculateFocusingPower(i: Int, s: Seq[Lens]): BigInt = {
+  def calculateFocusingPower(i: Int, s: Seq[Lens]): Long = {
     s.zipWithIndex.map(el =>
       (i + 1) * (el._2 + 1) * el._1.focalLength
     ).sum
   }
 
-  def part2(): BigInt = {
+  def part2(): Long = {
     val commands = line.split(",").map(Command.of)
 
     def replace[A](s: Seq[A], oldV: A, newV: A): Seq[A] = {
@@ -96,7 +96,8 @@ object Day15 {
 
   }
 
-  def main(args: Array[String]): Unit = timeMs {
-    println(part2())
+  def main(args: Array[String]): Unit = {
+    check(part1,495972)
+    check(part2,245223)
   }
 }

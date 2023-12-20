@@ -16,15 +16,15 @@ object Day10 {
     "F" -> Seq(Vect.DOWN, Vect.RIGHT),
   )
 
-  def readData(): Array[Array[String]] = {
+  def readData(): Seq[Seq[String]] = {
     readLines("day10.txt")
-      .map(_.split(""))
+      .map(_.split("").toSeq)
   }
 
-  def find(array: Array[Array[String]], str: String): Point = {
-    for (i <- array.indices) {
-      for (j <- array(0).indices) {
-        if (array(i)(j) == "S") {
+  def find(Seq: Seq[Seq[String]], str: String): Point = {
+    for (i <- Seq.indices) {
+      for (j <- Seq(0).indices) {
+        if (Seq(i)(j) == "S") {
           return Point(i, j)
         }
       }
@@ -32,7 +32,7 @@ object Day10 {
     Point(-1, -1)
   }
 
-  def findPath(arr: Array[Array[String]]): Set[Point] = {
+  def findPath(arr: Seq[Seq[String]]): Set[Point] = {
     var visited = Set.empty[Point]
 
     val startingPoint = find(arr, "S")
@@ -65,9 +65,7 @@ object Day10 {
   }
 
 
-
-
-  def enlarge(arr: Array[Array[String]]): Array[Array[String]] = {
+  def enlarge(arr: Seq[Seq[String]]): Seq[Seq[String]] = {
     val mapping = Map(
       "S" -> ".#.###.#.".grouped(3).toSeq,
       "|" -> ".#..#..#.".grouped(3).toSeq,
@@ -79,23 +77,23 @@ object Day10 {
       "." -> ".........".grouped(3).toSeq
     )
     val arr2 = arr.flatMap(row =>
-      row.foldLeft(Array("", "", ""))((acc, curr) => {
+      row.foldLeft(Seq("", "", ""))((acc, curr) => {
         val m = mapping(curr)
-        Array(
+        Seq(
           acc(0) + m(0).mkString,
           acc(1) + m(1).mkString,
           acc(2) + m(2).mkString
         )
       }
       )
-    ).map(_.split(""))
+    ).map(_.split("").toSeq)
     arr2
   }
 
-  def markPath(arr: Array[Array[String]], visited: Set[Point]): Array[Array[String]] = {
-    var res = Array.empty[Array[String]]
+  def markPath(arr: Seq[Seq[String]], visited: Set[Point]): Seq[Seq[String]] = {
+    var res = Seq.empty[Seq[String]]
     for (i <- arr.indices) {
-      var res2 = Array.empty[String]
+      var res2 = Seq.empty[String]
       for (j <- arr(0).indices) {
         if (visited.contains(Point(i, j)))
           res2 = res2 :+ arr(i)(j)
@@ -106,10 +104,10 @@ object Day10 {
     res
   }
 
-  def markVisited(arr: Array[Array[String]], visited: Set[Point]): Array[Array[String]] = {
-    var res = Array.empty[Array[String]]
+  def markVisited(arr: Seq[Seq[String]], visited: Set[Point]): Seq[Seq[String]] = {
+    var res = Seq.empty[Seq[String]]
     for (i <- arr.indices) {
-      var res2 = Array.empty[String]
+      var res2 = Seq.empty[String]
       for (j <- arr(0).indices) {
         if (visited.contains(Point(i, j)))
           res2 = res2 :+ "v"
@@ -120,16 +118,16 @@ object Day10 {
     res
   }
 
-  def part1(): BigInt = {
+  def part1(): Long = {
     val arr = readData()
     val visited = findPath(arr)
-    visited.size / 2 + 1
+    visited.size / 2
   }
 
-  def part2(): BigInt = {
+  def part2(): Long = {
     val arr = readData()
 
-    def isCorrect(array: Array[Array[String]])(point: Point): Boolean = point.isCorrect(array.length, array(0).length)
+    def isCorrect(Seq: Seq[Seq[String]])(point: Point): Boolean = point.isCorrect(Seq.length, Seq(0).length)
 
     val visited = findPath(arr)
     val arrWithPath = markPath(arr, visited)
@@ -162,10 +160,10 @@ object Day10 {
     val xLen = biggerArr.length
     val yLen = biggerArr(0).length
     val outerPoints = (
-      (0 until xLen).zip(Array.fill(xLen)(0))
-        ++ (0 until xLen).zip(Array.fill(xLen)(yLen - 1))
-        ++ (0 until yLen).zip(Array.fill(yLen)(0)).map(_.swap)
-        ++ (0 until yLen).zip(Array.fill(yLen)(xLen - 1)).map(_.swap)
+      (0 until xLen).zip(Seq.fill(xLen)(0))
+        ++ (0 until xLen).zip(Seq.fill(xLen)(yLen - 1))
+        ++ (0 until yLen).zip(Seq.fill(yLen)(0)).map(_.swap)
+        ++ (0 until yLen).zip(Seq.fill(yLen)(xLen - 1)).map(_.swap)
       ).map(el => Point(el._1, el._2))
       .filterNot(enlargedVisited.contains)
 
@@ -181,6 +179,7 @@ object Day10 {
   }
 
   def main(args: Array[String]): Unit = {
-    print(part2())
+    check(part1, 6725)
+    check(part2, 383)
   }
 }

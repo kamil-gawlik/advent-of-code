@@ -4,9 +4,9 @@ import utils._
 
 object Day06 {
 
-  type I = BigInt
+  type I = Long
 
-  case class Race(time: BigInt, bestDist: BigInt)
+  case class Race(time: Long, bestDist: Long)
 
   def readInput1(): Seq[Race] = {
     val lines = readLines("day06.txt")
@@ -22,29 +22,30 @@ object Day06 {
   def readInput2(): Race = {
     val lines = readLines("day06.txt")
 
-    def handleLine(l: String): BigInt = {
+    def handleLine(l: String): Long = {
       val numbers = l.split(":").tail(0)
-      BigInt(numbers.replace(" ", "").trim)
+      numbers.replace(" ", "").trim.toLong
     }
 
     Race(handleLine(lines(0)), handleLine(lines(1)))
   }
 
-  def part1(): BigInt = {
+  def part1(): Long = {
     val races = readInput1()
 
     races.map { r =>
-      BigInt(0).until(r.time).map(e => e * (r.time - e)).count(_ > r.bestDist)
+      0L.until(r.time).map(e => e * (r.time - e)).count(_ > r.bestDist)
     }.product
 
   }
 
-  def part2(): BigInt = {
+  def part2(): Long = {
     val race = readInput2()
-    BigInt(0).until(race.time).map(e => e * (race.time - e)).count(_ > race.bestDist)
+    0L.until(race.time).map(e => e * (race.time - e)).count(_ > race.bestDist)
   }
 
   def main(args: Array[String]): Unit = {
-    print(part2())
+    check(part1, 32076)
+    check(part2, 34278221)
   }
 }

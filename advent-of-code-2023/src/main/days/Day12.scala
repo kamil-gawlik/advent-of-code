@@ -5,13 +5,13 @@ import utils._
 object Day12 {
 
   case class Row(arr: String, failed: Seq[Int]) {
-    def countPossiblePermutations(): BigInt = {
+    def countPossiblePermutations(): Long = {
       countMatches(arr, failed)
     }
 
-    var memo = collection.mutable.Map.empty[(String, Seq[Int]), BigInt]
+    var memo = collection.mutable.Map.empty[(String, Seq[Int]), Long]
 
-    def countMatches(pattern: String, failed: Seq[Int]): BigInt = {
+    def countMatches(pattern: String, failed: Seq[Int]): Long = {
       val m = memo.get((pattern, failed))
       if (m.isDefined) {
         return m.get
@@ -22,7 +22,7 @@ object Day12 {
         } else return 0
       }
 
-      var count: BigInt = 0
+      var count: Long = 0
       val searchedF = failed.head
       val remainingF = failed.tail
       for (i <- Range(0, pattern.length - remainingF.sum - searchedF + 1)) {
@@ -57,18 +57,19 @@ object Day12 {
       }
   }
 
-  def part1(): BigInt = {
+  def part1(): Long = {
     val rows = readInput()
     rows.map(_.countPossiblePermutations()).sum
   }
 
-  def part2(): BigInt = {
+  def part2(): Long = {
     val rows = readInput2()
     rows.map(_.countPossiblePermutations()).sum
   }
 
 
   def main(args: Array[String]): Unit = {
-    println(part2())
+    check(part1,7633)
+    check(part2,23903579139437L)
   }
 }

@@ -38,26 +38,11 @@ object Day08 {
     return -1
   }
 
-  def gcd(x: BigInt, y: BigInt): BigInt =
-    if (y == 0)
-      x
-    else
-      gcd(y, x % y)
-
-  def lcm(numbers: Seq[BigInt], index: Int): BigInt = {
-    if (index == numbers.length - 1) {
-      return numbers(index)
-    }
-    val a = numbers(index)
-    val b = lcm(numbers, index + 1)
-    (a * b) / gcd(a, b)
-  }
-
-  def part2(): BigInt = {
+  def part2(): Long = {
     val (directions, map) = readData()
 
-    def getNumberOfStepsToZ(startPoint: String, map: Map[String, Next]): BigInt = {
-      var c = BigInt(0)
+    def getNumberOfStepsToZ(startPoint: String, map: Map[String, Next]): Long = {
+      var c = 0L
       var curr = startPoint
       for (d <- Array.fill(10000)(directions).flatten) {
         c = c + 1
@@ -72,10 +57,11 @@ object Day08 {
     val startingPoints = map.keys.filter(_.endsWith("A"))
     // works on assumption, there is only one end for each starting node
     val stepsToZ = startingPoints.map(c => getNumberOfStepsToZ(c, map))
-    lcm(stepsToZ.toSeq, 0)
+    lcm(stepsToZ.toSeq)
   }
 
   def main(args: Array[String]): Unit = {
-    println(part2())
+    check(part1, 22357)
+    check(part2, 10371555451871L)
   }
 }

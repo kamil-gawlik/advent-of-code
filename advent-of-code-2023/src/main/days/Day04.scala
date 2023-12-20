@@ -33,7 +33,7 @@ object Day04 {
           else acc
         }
       }
-      .map { p => println(p); p }
+      //.map { p => println(p); p }
       .sum
   }
 
@@ -53,11 +53,12 @@ object Day04 {
       val (updated, remaining) = high.splitAt(c._2)
       count = low ++ updated.map(_ + count(idx)) ++ remaining
     }
-    println(count.mkString("(", ", ", ")"))
+    //println(count.mkString("(", ", ", ")"))
     count.sum
   }
 
   def main(args: Array[String]): Unit = {
-    println(part2())
+    check(part1,21558)
+    check(part2,10425665)
   }
 }

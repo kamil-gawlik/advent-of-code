@@ -2,7 +2,7 @@ package utils
 
 import scala.collection.mutable.{HashMap, HashSet}
 
-object Dijkstra {
+trait dijkstra {
   type V = (Int, Int)
 
   class WeightedDiGraph[V]() {

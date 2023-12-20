@@ -41,24 +41,24 @@ object Day14 {
     e
   }
 
-  def calculateNorthWeight(c: M[Char]): BigInt = {
+  def calculateNorthWeight(c: M[Char]): Long = {
     c.reverse // index is now naturally aligned with north weight
       .zipWithIndex
       .map(el => el._1.count(_ == 'O') * (el._2 + 1))
       .sum
   }
 
-  def part1(): BigInt = {
+  def part1(): Long = {
     val tilted = tiltNorth(lines)
     calculateNorthWeight(tilted)
   }
 
-  def part2(): BigInt = {
+  def part2(): Long = {
     var l = lines
-    val targetIterations: BigInt = 1000000000
-    val cycleMemo = collection.mutable.Map.empty[Int, BigInt]
+    val targetIterations: Long = 1000000000
+    val cycleMemo = collection.mutable.Map.empty[Int, Long]
 
-    var i = BigInt(0)
+    var i = 0L
     while (!cycleMemo.contains(l.hashCode())) {
       cycleMemo.put(l.hashCode(), i)
       l = cycle(l)
@@ -66,13 +66,14 @@ object Day14 {
     }
     val repeatStart = cycleMemo(l.hashCode())
     val repeatSize = i - repeatStart
-    (BigInt(0) until (targetIterations - repeatStart) % repeatSize).foreach { _ =>
+    (0L until (targetIterations - repeatStart) % repeatSize).foreach { _ =>
       l = cycle(l)
     }
     calculateNorthWeight(l)
   }
 
-  def main(args: Array[String]): Unit = timeMs {
-    println(part2())
+  def main(args: Array[String]): Unit = {
+    check(part1,105208)
+    check(part2,102943)
   }
 }
